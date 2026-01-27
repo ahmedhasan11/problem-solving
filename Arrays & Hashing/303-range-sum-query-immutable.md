@@ -52,3 +52,39 @@ public class NumArray {
 ### Complexity
 - Time Complexity: O(n)
 - Space Complexity: O(n)
+
+## Approach 2 — Prefix Sum (Optimized)
+
+Instead of summing the range every time, we calculate cumulative sums once in the constructor.
+
+Each index in the prefix array stores the sum from index 0 up to that index.
+
+To get sum from left to right:
+- If left == 0 → return prefix[right]
+- Otherwise → return prefix[right] - prefix[left - 1]
+
+### Optimized Solution (C#)
+
+public class NumArray {
+    private int[] prefix;
+
+    public NumArray(int[] nums) {
+        prefix = new int[nums.Length];
+        prefix[0] = nums[0];
+
+        for (int i = 1; i < nums.Length; i++) {
+            prefix[i] = prefix[i - 1] + nums[i];
+        }
+    }
+
+    public int SumRange(int left, int right) {
+        if (left == 0) return prefix[right];
+        return prefix[right] - prefix[left - 1];
+    }
+}
+
+### Complexity (Optimized)
+
+Constructor: O(n)  
+Each Query: O(1)  
+Space: O(n)
